@@ -58,7 +58,7 @@ const directMovement = (type) => asyncHandler(async (request, response) => {
   if (type === "out" && quantity > previous) throw new ApiError(400, "موجود سټاک کافي نه دی.");
   const next = type === "in" ? previous + quantity : previous - quantity;
 
-  const { error: updateError } = await supabaseAdmin.from("products").update({ quantity: next }).eq("id", productId);
+  const { error: updateError } = await supabaseAdmin.from("products").update({ quantity: next, updated_at: new Date().toISOString() }).eq("id", productId);
   if (updateError) throw new ApiError(400, updateError.message);
 
   const { data: movement, error } = await supabaseAdmin.from("stock_movements").insert({
