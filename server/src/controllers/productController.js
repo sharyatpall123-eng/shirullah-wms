@@ -94,7 +94,7 @@ export const updateProduct = asyncHandler(async (request, response) => {
 
   const { data, error } = await supabaseAdmin
     .from("products")
-    .update(payload)
+    .update({ ...payload, updated_at: new Date().toISOString() })
     .eq("id", request.params.id)
     .select()
     .single();
