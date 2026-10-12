@@ -10,7 +10,6 @@ import { authService } from "../Services/wmsService";
 const AuthContext = createContext(null);
 const SESSION_KEY = "wms_session";
 const PROFILE_KEY = "wms_profile";
-const ACCOUNT_SUSPENDED = false;
 
 function readStored(key) {
   try {
@@ -37,21 +36,11 @@ function saveAuth(session, profile, remember) {
 }
 
 export function AuthProvider({ children }) {
-  const [session, setSession] = useState(() => {
-    if (ACCOUNT_SUSPENDED) {
-      clearAuth();
-      return null;
-    }
-    return readStored(SESSION_KEY);
-  });
-  const [profile, setProfile] = useState(() => ACCOUNT_SUSPENDED ? null : readStored(PROFILE_KEY));
+  const [session, setSession] = useState(() => readStored(SESSION_KEY));
+  const [profile, setProfile] = useState(() => readStored(PROFILE_KEY));
   const [loading, setLoading] = useState(false);
 
   const login = useCallback(async (identifier, loginCode, remember = true) => {
-    if (ACCOUNT_SUSPENDED) {
-      clearAuth();
-      throw new Error("لطفاً اول پرداخت خود را انجام دهید. سپس حساب شما فعال خواهد شد.");
-    }
     setLoading(true);
     try {
       const result = await authService.login({
