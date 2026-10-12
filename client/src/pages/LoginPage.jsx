@@ -75,16 +75,10 @@ export default function LoginPage() {
     year: "numeric",
   });
 
-  const ACCOUNT_SUSPENDED = false;
-
-  if (isAuthenticated && !ACCOUNT_SUSPENDED) return <Navigate to="/" replace />;
+  if (isAuthenticated) return <Navigate to="/" replace />;
 
   const submit = async (event) => {
     event.preventDefault();
-    if (ACCOUNT_SUSPENDED) {
-      toast.error("لطفاً اول پرداخت خود را انجام دهید. سپس حساب شما فعال خواهد شد.");
-      return;
-    }
     if (!form.identifier.trim() || !form.login_code) {
       toast.error("نوم / Email او Login Code ولیکئ.");
       return;
@@ -126,11 +120,7 @@ export default function LoginPage() {
                 <div className="mx-auto mt-5 h-1 w-20 rounded-full bg-blue-600" />
                 <h2 className="mt-7 text-2xl font-black text-slate-900">ښه راغلاست</h2>
                 <p className="mt-2 text-sm text-slate-600">خپل حساب ته ننوځئ</p>
-                {ACCOUNT_SUSPENDED ? (
-                  <div dir="rtl" className="mt-5 rounded-2xl border border-amber-300 bg-amber-50/90 px-4 py-3 text-center text-sm font-black leading-7 text-amber-900 shadow-sm">
-                    لطفاً اول پرداخت خود را انجام دهید. سپس حساب شما فعال خواهد شد.
-                  </div>
-                ) : null}
+                <p dir="ltr" className="mt-4 text-center text-xs font-medium text-slate-500">2026/10/1</p>
               </div>
 
               <div className="mt-7 space-y-4">
@@ -192,10 +182,10 @@ export default function LoginPage() {
 
                 <button
                   type="submit"
-                  disabled={loading || ACCOUNT_SUSPENDED}
+                  disabled={loading}
                   className="mt-2 inline-flex h-14 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-blue-500 to-blue-700 text-base font-black text-white shadow-[0_16px_34px_rgba(37,99,235,.28)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_40px_rgba(37,99,235,.34)] disabled:pointer-events-none disabled:opacity-60"
                 >
-                  {ACCOUNT_SUSPENDED ? "حساب موقتاً غیرفعال است" : loading ? "داخلېږي..." : "ننوتل"}
+                  {loading ? "داخلېږي..." : "ننوتل"}
                 </button>
               </div>
 
