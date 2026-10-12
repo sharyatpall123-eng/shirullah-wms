@@ -75,7 +75,7 @@ export default function LoginPage() {
     year: "numeric",
   });
 
-  const ACCOUNT_SUSPENDED = true;
+  const ACCOUNT_SUSPENDED = false;
 
   if (isAuthenticated && !ACCOUNT_SUSPENDED) return <Navigate to="/" replace />;
 
