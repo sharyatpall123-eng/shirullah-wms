@@ -10,7 +10,7 @@ import { authService } from "../Services/wmsService";
 const AuthContext = createContext(null);
 const SESSION_KEY = "wms_session";
 const PROFILE_KEY = "wms_profile";
-const ACCOUNT_SUSPENDED = true;
+const ACCOUNT_SUSPENDED = false;
 
 function readStored(key) {
   try {
